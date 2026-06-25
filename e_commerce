@@ -1,0 +1,19 @@
+import requests
+import pandas as pd
+
+
+response = requests.get("https://fakestoreapi.com/products")
+products = response.json()
+
+
+df = pd.DataFrame(products)
+
+# Analysis
+print("=== E-Commerce Product Analysis ===")
+print(f"Total Products: {len(df)}")
+print(f"Average Price: ${df['price'].mean():.2f}")
+print(f"Most Expensive: {df.loc[df['price'].idxmax(), 'title']} - ${df['price'].max():.2f}")
+print(f"Cheapest: {df.loc[df['price'].idxmin(), 'title']} - ${df['price'].min():.2f}")
+
+print("\nCategory-wise Count:")
+print(df['category'].value_counts().to_string())
